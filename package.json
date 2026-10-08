@@ -1,0 +1,23 @@
+{
+  "name": "js_theory",
+  "version": "1.0.0",
+  "description": "test",
+  "homepage": "https://github.com/alexkozlovski3003/JS_Theory#readme",
+  "bugs": {
+    "url": "https://github.com/alexkozlovski3003/JS_Theory/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexkozlovski3003/JS_Theory.git"
+  },
+  "license": "ISC",
+  "author": "Alex",
+  "type": "commonjs",
+  "main": "homework_2.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.20.0"
+  }
+}
