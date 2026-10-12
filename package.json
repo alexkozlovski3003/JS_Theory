@@ -12,12 +12,16 @@
   },
   "license": "ISC",
   "author": "Alex",
-  "type": "commonjs",
+  "type": "module",
   "main": "homework_2.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node homework_6.js",
+    "say": "echo \"I love npm scripts!\""
   },
   "dependencies": {
-    "axios": "^1.20.0"
-  }
+    "axios": "^1.20.0",
+    "chalk": "^6.0.1"
+  },
+  "keywords": []
 }
