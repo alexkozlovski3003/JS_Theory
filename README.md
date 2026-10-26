@@ -1,2 +1,1 @@
-# Project JS-PW by A. Kazlouski!
-# Changes
+# Project JS-PW by A. Kazlouski
