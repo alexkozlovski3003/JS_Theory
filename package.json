@@ -15,7 +15,6 @@
   "type": "module",
   "main": "homework_2.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node homework_6.js",
     "say": "echo \"I love npm scripts!\""
   },
@@ -23,5 +22,9 @@
     "axios": "^1.20.0",
     "chalk": "^6.0.1"
   },
-  "keywords": []
+  "keywords": [],
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5"
+  }
 }
