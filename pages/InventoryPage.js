@@ -7,14 +7,18 @@ export class InventoryPage {
         this.cartIcon = page.locator('[data-test="shopping-cart-link"]')
         this.inventoryItems = page.locator('[data-test="inventory-item"]');
         this.addToCartButtons = page.locator('[data-test^="add-to-cart-"]');
+        this.filterDropdown = page.locator('[data-test="product-sort-container"]');
     }
 
     async addItemToCart(itemName) {
         const targetCard = this.inventoryItems.filter({ hasText: itemName });
-
         await targetCard.locator('[data-test^="add-to-cart-"]').click();
     }
 
+    async filterItems(filterOption) {
+        await this.filterDropdown.selectOption(filterOption);
+    }
+    
     async openCart() {
         await this.cartIcon.click();
     }

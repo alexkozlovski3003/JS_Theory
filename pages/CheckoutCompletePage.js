@@ -7,7 +7,7 @@ export class CheckoutCompletePage {
         this.backHomeButton = page.locator('button[data-test="back-to-products"]');
     }
 
-    async getCopleteMessage() {
+    async getCompleteMessage() {
         return await this.completeMessage.textContent();
     }
 
