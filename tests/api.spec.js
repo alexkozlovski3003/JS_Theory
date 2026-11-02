@@ -3,53 +3,109 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('API-тесты для Restful-booker', () => {
+    test.describe.configure({ mode: 'serial' });
 
     const baseURL = 'https://restful-booker.herokuapp.com';
+    const bookingData = {
+            firstname: "Alex",
+            lastname: "Normalex",
+            totalprice: 100,
+            depositpaid: true,
+            bookingdates: {
+                checkin: "2026-02-11",
+                checkout: "2026-02-15"
+            },
+            additionalneeds: "Dinner"
+        };
+
     let bookingId;
+    let authToken;
 
     test('Получение списка ID бронирований', async ({ request }) => {
-    // Отправляем GET-запрос
-    const response = await request.get(`${baseURL}/booking`);
+        const response = await request.get(`${baseURL}/booking`);
 
-    // Проверка 1: Статус-код ответа
-    console.log(`Статус-код: ${response.status()}`);
-    expect(response.status()).toBe(200);
+        expect(response.status()).toBe(200);
 
-    // Проверка 2: Тело ответа не пустое
-    const responseBody = await response.json();
-    console.log('Тело ответа:', responseBody);
-    expect(responseBody.length).toBeGreaterThan(0);
+        const responseBody = await response.json();
+        expect(responseBody.length).toBeGreaterThan(0);
 
-    // Проверка 3: В ответе есть объекты с ключом 'bookingid'
-    expect(responseBody[0]).toHaveProperty('bookingid');
-  });
-
-  test('Создание бронирования', async ({ request}) => {
-
-    const bookingData = {
-        firstname: "Alex",
-        lastname: "Normalex",
-        totalprice: 100,
-        depositpaid: true,
-        bookingdates: {
-            checkin: "2026-02-11",
-            checkout: "2026-02-15"
-        },
-        additionalneeds: "Dinner"
-    };
-
-    const response = await request.post(`${baseURL}/booking`, {
-        data: bookingData
+        expect(responseBody[0]).toHaveProperty('bookingid');
     });
 
-    console.log(`Статус-код: ${response.status()}`);
-    expect(response.status()).toBe(200);
+    test('Создание бронирования', async ({ request }) => {
 
-    const responseBody = await response.json();
-    console.log(`Тело ответа:`, responseBody);
+        const response = await request.post(`${baseURL}/booking`, {
+            data: bookingData
+        });
 
-    expect(responseBody).toHaveProperty('bookingid');
-    bookingId = responseBody.bookingid;
-    expect(responseBody.booking).toMatchObject(bookingData);
-  });
+        expect(response.status()).toBe(200);
+
+        const responseBody = await response.json();
+
+        expect(responseBody).toHaveProperty('bookingid');
+        
+        bookingId = responseBody.bookingid;
+
+        expect(responseBody.booking).toMatchObject(bookingData);
+    });
+
+    test ('Получение информации о бронировании', async ({ request }) => {
+
+        const response = await request.get(`${baseURL}/booking/${bookingId}`);
+
+        expect(response.status()).toBe(200);
+
+        const responseBody = await response.json();
+
+        expect(responseBody).toMatchObject(bookingData);
+    });
+
+    test('Обновление бронирования', async ({ request }) => {
+
+        const authResponse = await request.post(`${baseURL}/auth`, {
+            data: {
+                username: "admin",
+                password: "password123"
+            }
+        });
+
+        expect(authResponse.status()).toBe(200);
+
+        const authResponseBody = await authResponse.json();
+        authToken = authResponseBody.token;
+
+        const updatedBookingData = {
+            ...bookingData,
+            firstname: 'Leon',
+            totalprice: 300
+        };
+
+        const response = await request.put(`${baseURL}/booking/${bookingId}`, {
+            headers: {
+                'Cookie': `token=${authToken}`
+            },
+            data: updatedBookingData
+        });
+
+        expect(response.status()).toBe(200);
+
+        const responseBody = await response.json();
+
+        expect(responseBody).toMatchObject(updatedBookingData);
+    });
+
+    test('Удаление бронирования', async ({ request }) => {
+
+        const response = await request.delete(`${baseURL}/booking/${bookingId}`, {
+            headers: {
+                'Cookie': `token=${authToken}`
+            },
+        });
+
+        expect(response.status()).toBe(201);
+
+        const getResponse = await request.get(`${baseURL}/booking/${bookingId}`);
+
+        expect(getResponse.status()).toBe(404);
+    });
 });
