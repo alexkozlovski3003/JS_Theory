@@ -8,7 +8,7 @@ import {CheckoutStepTwoPage} from '../pages/CheckoutStepTwoPage';
 import {CheckoutCompletePage} from '../pages/CheckoutCompletePage';
 
 test.describe('E2E test of Sauce Demo', () => {
-    test('User can complete the full purchase process', async ({page}) => {
+    test('User can complete the full purchase process @ui', async ({page}) => {
         const loginPage = new LoginPage(page);
         const inventoryPage = new InventoryPage(page);
         const cartPage = new CartPage(page);

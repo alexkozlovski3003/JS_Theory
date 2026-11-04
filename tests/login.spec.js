@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Авторизация на Sauce Demo', () => {
-  test('User can login successfully', async ({ page }) => {
+  test('User can login successfully @ui', async ({ page }) => {
     await page.goto('https://www.saucedemo.com/');
 
     await page.locator('#user-name').fill('standard_user');
@@ -12,7 +12,7 @@ test.describe('Авторизация на Sauce Demo', () => {
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');
   });
 
-  test('User can login unsuccessfully', async({ page }) => {
+  test('User can login unsuccessfully @ui', async({ page }) => {
     await page.goto('https://www.saucedemo.com/');
 
     await page.locator('#user-name').fill('locked_out_user');

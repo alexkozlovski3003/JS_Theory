@@ -21,7 +21,7 @@ test.describe('API-тесты для Restful-booker', () => {
     let bookingId;
     let authToken;
 
-    test('Получение списка ID бронирований', async ({ request }) => {
+    test('Получение списка ID бронирований @api', async ({ request }) => {
         const response = await request.get(`${baseURL}/booking`);
 
         expect(response.status()).toBe(200);
@@ -32,7 +32,7 @@ test.describe('API-тесты для Restful-booker', () => {
         expect(responseBody[0]).toHaveProperty('bookingid');
     });
 
-    test('Создание бронирования', async ({ request }) => {
+    test('Создание бронирования @api', async ({ request }) => {
 
         const response = await request.post(`${baseURL}/booking`, {
             data: bookingData
@@ -49,7 +49,7 @@ test.describe('API-тесты для Restful-booker', () => {
         expect(responseBody.booking).toMatchObject(bookingData);
     });
 
-    test ('Получение информации о бронировании', async ({ request }) => {
+    test ('Получение информации о бронировании @api', async ({ request }) => {
 
         const response = await request.get(`${baseURL}/booking/${bookingId}`);
 
@@ -60,7 +60,7 @@ test.describe('API-тесты для Restful-booker', () => {
         expect(responseBody).toMatchObject(bookingData);
     });
 
-    test('Обновление бронирования', async ({ request }) => {
+    test('Обновление бронирования @api', async ({ request }) => {
 
         const authResponse = await request.post(`${baseURL}/auth`, {
             data: {
@@ -94,7 +94,7 @@ test.describe('API-тесты для Restful-booker', () => {
         expect(responseBody).toMatchObject(updatedBookingData);
     });
 
-    test('Удаление бронирования', async ({ request }) => {
+    test('Удаление бронирования @api', async ({ request }) => {
 
         const response = await request.delete(`${baseURL}/booking/${bookingId}`, {
             headers: {

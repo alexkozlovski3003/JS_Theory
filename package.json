@@ -16,7 +16,10 @@
   "main": "homework_2.js",
   "scripts": {
     "start": "node homework_6.js",
-    "say": "echo \"I love npm scripts!\""
+    "say": "echo \"I love npm scripts!\"",
+    "tests:ui": "npx playwright test --grep @ui", 
+    "tests:api": "npx playwright test --grep @api", 
+    "tests:all": "npx playwright test"
   },
   "dependencies": {
     "axios": "^1.20.0",
